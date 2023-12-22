@@ -1,0 +1,39 @@
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+         {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "aoss:APIAccessAll",
+            "Resource": "arn:aws:aoss:us-east-2:909293070315:collection/*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "aoss:DashboardsAccessAll",
+            "Resource": "arn:aws:aoss:us-east-2:909293070315:collection/*"
+        }
+    ]
+}
+
+
+output {
+  opensearch {
+    ecs_compatibility => disabled
+    hosts => "https://o5itxk4wcnk138t9b33k.us-east-2.aoss.amazonaws.com:443"
+    index => my-index
+    auth_type => {
+      type => 'aws_iam'
+      region => 'us-east-2'
+      service_name => 'aoss'
+    }
+    default_server_major_version => 2
+    legacy_template => false
+  }
+}
+
+/usr/share/logstash/logstash-7.17.6/bin/logstash -f  logstash.conf
+
+amazon_es
+
